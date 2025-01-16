@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- Форма -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h1 class="text-center mb-4">Отправка данных</h1>
+                <form action="/api/send" method="GET" class="row g-3">
+                    <!-- <div class="col-md-6">
+                        <label for="name" class="form-label">Имя</label>
+                        <input id="name" name="name" class="form-control" placeholder="Введите имя" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="email" class="form-control" placeholder="Введите email" />
+                    </div> -->
+                    
+                    <div class="mb-3" id="radio-buttons-container">
+                        <!-- Радиобатоны будут добавлены здесь -->
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS (для интерактивных компонентов) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+     <script>
+        const variantsMen = {
+            'мужчина выпускник школы 18-19': [0, 1, [5]],
+            'мужчина выпускник средне-профессионального': [0, 2,[6]],
+            'мужчина инвалид 20-29': [0,2, [2]],
+            'мужчина инвалид 30-39': [0,3, [2]],
+            'мужчина инвалид 40-49': [0,4, [2]],
+            'мужчина инвалид 50-59': [0,5, [2]],
+
+            'мужчина сокращение 20-29': [0,2, [4]],
+            'мужчина сокращение 30-39': [0,3, [4]],
+            'мужчина сокращение 40-49': [0,4, [4]],
+            'мужчина сокращение 50-59': [0,5, [4]],
+
+            'мужчина не работающий больше года 20-29': [0,2, [8]],
+            'мужчина не работающий больше года 30-39': [0,3, [8]],
+            'мужчина не работающий больше года 40-49': [0,4, [8]],
+            'мужчина не работающий больше года 50-59': [0,5, [8]],
+
+            'мужчина предпенсионного возраста 50-59': [0,5, [0]],
+            'мужчина предпенсионного возраста 60-69': [0,6, [0]],
+
+            'мужчина пенсионер 70+': [0,7, [1]],
+
+            'мужчина случайный возраст не относится ни к одной категории граждан': [0, 2, [9]]
+        }
+        const variantsWomen = {
+            'женщина выпускница школы 18-19': [0, 1, [5]],
+            'женщина выпускница средне-профессионального': [0, 2, [6]],
+            'женщина инвалид 20-29': [0, 2, [2]],
+            'женщина инвалид 30-39': [0, 3, [2]],
+            'женщина инвалид 40-49': [0, 4, [2]],
+            'женщина инвалид 50-59': [0, 5, [2]],
+
+            'женщина сокращение 20-29': [0, 2, [4]],
+            'женщина сокращение 30-39': [0, 3, [4]],
+            'женщина сокращение 40-49': [0, 4, [4]],
+            'женщина сокращение 50-59': [0, 5, [4]],
+
+            'женщина не работающая больше года 20-29': [0, 2, [8]],
+            'женщина не работающая больше года 30-39': [0, 3, [8]],
+            'женщина не работающая больше года 40-49': [0, 4, [8]],
+            'женщина не работающая больше года 50-59': [0, 5, [8]],
+
+            'женщина предпенсионного возраста 50-59': [0, 5, [0]],
+            'женщина предпенсионного возраста 60-69': [0, 6, [0]],
+
+            'женщина пенсионер 70+': [0, 7, [1]],
+
+            'женщина случайный возраст не относится ни к одной категории граждан': [0, 2, [9]]
+        };
+        const variants = {
+            ...variantsMen,
+            ...variantsWomen
+        };
+
+        // Функция для генерации радиобатонов
+        function generateRadioButtons(variants) {
+            const container = document.getElementById("radio-buttons-container");
+            Object.keys(variants).forEach((key, index) => {
+                const [minAge, maxAge, categories] = variants[key];
+                const radioId = `radio-${index}`;
+                
+                const radioHtml = `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="variant" id="${radioId}" value="${key}">
+                        <label class="form-check-label" for="${radioId}">
+                            ${key}
+                        </label>
+                    </div>
+                `;
+
+                container.innerHTML += radioHtml;
+            });
+        }
+
+        // Генерируем радиобатоны на странице
+        generateRadioButtons(variants);
+    </script>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Успешно отправленно!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toastElement = document.getElementById("toast");
+        const toast = new bootstrap.Toast(toastElement);
+        const cURL = new URL(window.location.href)
+        const params = new URLSearchParams(cURL.search);
+        try {
+            const status = params.get('status')
+            if(status === 'ok') {
+                toast.show();
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+            params.delete('status')
+        }
+       
+    </script>
+</body>
+</html>
