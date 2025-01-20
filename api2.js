@@ -45,7 +45,7 @@ const sendVote2 = (key) => {
     const body =  {
         "configId":"167682",
         "email":null,
-        "userName": name,
+        "userName": "",
         "regnumber":null,
         "cznName":177752,
         "answers": JSON.stringify([part1, part2]),
