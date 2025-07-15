@@ -14,7 +14,7 @@ const r = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 const r9 = () => {
-    return r(7, 9)
+    return r(8, 9)
 }
 const maleNames = [
     "Александр",'', "Дмитрий", "Иван", "Михаил", "Сергей", '',"Андрей",'', "Алексей", '',"Владимир", 
